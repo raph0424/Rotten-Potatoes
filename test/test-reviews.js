@@ -14,7 +14,12 @@ chai.use(chaiHttp);
 
 describe('Reviews', ()  => {
 
-    
+    after(() => {
+     Review.deleteMany({title: 'Super Sweet Review'}).exec((err, reviews) => {
+       console.log(reviews)
+     })
+   });
+
 
   // TEST INDEX
   it('should index ALL reviews on / GET', (done) => {
@@ -37,17 +42,6 @@ describe('Reviews', ()  => {
                 done();
             });
         });
-  // TEST CREATE
-  it('should create a SINGLE review on /reviews POST', (done) => {
-      chai.request(server)
-      .post('/reviews')
-      .send(sampleReview)
-      .end((err, res) => {
-          res.should.have.status(200);
-          res.should.be.html
-          done()
-      });
-  });
   // TEST SHOW
   it('should show a SINGLE review on /reviews/<id> GET', (done) => {
     var review = new Review(sampleReview);
@@ -88,7 +82,7 @@ describe('Reviews', ()  => {
           });
       });
   });
-   // TEST DELETE
+   
    it('should delete a SINGLE review on /reviews/<id> DELETE', (done) => {
     var review = new Review(sampleReview);
     review.save((err, data)  => {
@@ -100,11 +94,5 @@ describe('Reviews', ()  => {
         done();
       });
     });
-  });
-
-  after(() => {
-    Review.deleteMany({title: 'Super Sweet Review'}).exec((err, reviews) => {
-      console.log(reviews)
-    })
   });
 });
