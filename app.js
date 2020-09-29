@@ -3,6 +3,8 @@ const methodOverride = require('method-override')
 const app = express();
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const port = process.env.PORT || 3000;
+app.listen(port);
 
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/rotten-potatoes', { useNewUrlParser: true });
 
