@@ -1,6 +1,7 @@
 const Review = require('../models/review');
 const Comment = require('../models/comment')
-
+// Got to import the libary
+const moment = require('moment');
 module.exports = function(app) {
 
     app.get('/', (req, res) => {
@@ -17,20 +18,26 @@ app.get('/reviews/new', (req, res) => {
     res.render('reviews-new', {title: "New Review"});
 })
 
-// SHOW
-app.get('/reviews/:id', (req, res) => {
-  // find review
-  Review.findById(req.params.id).then(review => {
-    // fetch its comments
-    Comment.find({ reviewId: req.params.id }).then(comments => {
-      // respond with the template with both values
-      res.render('reviews-show', { review: review, comments: comments })
-    })
-  }).catch((err) => {
-    // catch errors
-    console.log(err.message)
-  });
+
+  // SHOW
+  app.get('/reviews/:id', (req, res) => {
+    // find review
+    Review.findById(req.params.id).then(review => {
+        let createdAt = review.createdAt;
+        createdAt = moment(createdAt).format('MMMM Do YYYY, h:mm:ss a');
+        review.createdAtFormatted = createdAt;
+        // fetch its comments
+        Comment.find({ reviewId: req.params.id }).then(comments => {
+            comments.reverse();
+            // respond with the template with both values
+            res.render('reviews-show', { review: review, comments: comments })
+        })
+    }).catch((err) => {
+        // catch errors
+        console.log(err.message)
+    });
 });
+
 
 // CREATE
 app.post('/reviews', (req, res) => {

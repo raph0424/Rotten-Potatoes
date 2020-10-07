@@ -4,6 +4,8 @@
 <div class="row">
   <div class="col-sm-6 col-sm-offset-3">
     <h1>{{review.title}}</h1>
+<small class="text-muted">Created on: {{review.createdAtFormatted}}</small>
+
     <h2>{{review.movieTitle}}</h2>
     <p>{{review.description}}</p>
     <p><a href="/reviews/{{review._id}}/edit">Edit</a></p>
@@ -15,7 +17,7 @@
 
     <!-- Comment form -->
     {{> comment-form}}
-    
+
     <hr>
 
     <!-- Show Comments -->

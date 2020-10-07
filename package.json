@@ -12,10 +12,14 @@
   "dependencies": {
     "@handlebars/allow-prototype-access": "^1.0.3",
     "body-parser": "^1.19.0",
+    "ejs": "^3.1.5",
+    "elasticsearch": "^16.7.1",
     "express": "^4.17.1",
     "express-handlebars": "^3.1.0",
     "method-override": "^3.0.0",
-    "mongoose": "^5.10.6"
+    "moment": "^2.29.1",
+    "mongoose": "^5.10.6",
+    "omdb": "^0.8.0"
   },
   "devDependencies": {
     "chai": "^4.2.0",
