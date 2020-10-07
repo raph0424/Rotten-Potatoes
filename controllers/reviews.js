@@ -1,4 +1,6 @@
 const Review = require('../models/review');
+const Comment = require('../models/comment')
+
 module.exports = function(app) {
 
     app.get('/', (req, res) => {
@@ -17,12 +19,18 @@ app.get('/reviews/new', (req, res) => {
 
 // SHOW
 app.get('/reviews/:id', (req, res) => {
-    Review.findById(req.params.id).then((review) => {
-      res.render('reviews-show', { review: review })
-    }).catch((err) => {
-      console.log(err.message);
+  // find review
+  Review.findById(req.params.id).then(review => {
+    // fetch its comments
+    Comment.find({ reviewId: req.params.id }).then(comments => {
+      // respond with the template with both values
+      res.render('reviews-show', { review: review, comments: comments })
     })
-  })
+  }).catch((err) => {
+    // catch errors
+    console.log(err.message)
+  });
+});
 
 // CREATE
 app.post('/reviews', (req, res) => {
@@ -57,7 +65,4 @@ app.delete('/reviews/:id', function (req, res) {
       console.log(err.message);
     })
   })
-app.listen(3000, () => {
-    console.log('App listening on port 3000!')
-})
   }

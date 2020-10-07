@@ -13,6 +13,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride('_method'))
 
 const reviews = require('./controllers/reviews')(app);
+const comments = require('./controllers/comments')(app);
 
 var exphbs = require('express-handlebars');
 
